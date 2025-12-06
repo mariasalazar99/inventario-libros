@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Libros</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+  <h2 class="text-center mb-4">Libros disponibles</h2>
+  <div class="row">
+    <% libros.forEach(libro => { %>
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><%= libro.nombre %></h5>
+            <p class="card-text">Stock: 
+              <span class="badge <%= libro.cantidad_disponible <= 5 ? 'bg-warning text-dark' : 'bg-primary' %>">
+                <%= libro.cantidad_disponible %>
+              </span>
+            </p>
+            <button class="btn btn-success mt-auto" onclick="comprarLibro(<%= libro.id %>)">
+              Comprar
+            </button>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <div id="message" class="mt-3"></div>
+</div>
+
+  <script>
+async function comprarLibro(id) {
+  const cantidad = prompt('¿Cuántos quieres comprar?');
+  if (!cantidad) return;
+
+  const token = localStorage.getItem('token');
+  if (!token) return showMessage('Debes iniciar sesión primero', 'danger');
+
+  try {
+    const res = await fetch(`/api/libros/${id}/comprar`, {   // <-- agrega /api
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ cantidad: Number(cantidad) })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      showMessage(data.message, 'success');
+      // actualizar stock
+      const li = document.querySelector(`button[onclick="comprarLibro(${id})"]`).parentElement;
+      li.innerHTML = `${data.libro.nombre} - Stock: ${data.libro.cantidad_disponible} <button class="btn btn-sm btn-success" onclick="comprarLibro(${id})">Comprar</button>`;
+    } else {
+      showMessage(data.message, 'danger');
+    }
+  } catch (err) {
+    console.error(err);
+    showMessage('Error en la compra', 'danger');
+  }
+}
+
+    function showMessage(msg, type) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.innerHTML = `<div class="alert alert-${type}" role="alert">${msg}</div>`;
+    }
+  </script>
+</body>
+</html>

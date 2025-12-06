@@ -1,0 +1,103 @@
+/* =====================
+   General
+===================== */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f5f0ff; /* morado claro */
+  color: #4b0082;
+}
+
+h2 {
+  color: #4b0082; /* morado intenso */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* =====================
+   Lista de libros
+===================== */
+.list-group-item {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #e0ccff; /* resalta al pasar el mouse */
+}
+
+.list-group-item-warning {
+  background-color: #ffebcc !important; /* stock bajo */
+  font-weight: bold;
+}
+
+/* Botones */
+.btn-success {
+  background-color: #7b2cbf;
+  border-color: #7b2cbf;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #5a189a;
+  border-color: #5a189a;
+}
+
+/* Mensajes dinámicos */
+.alert {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+#message {
+  min-height: 40px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* =====================
+   Formularios login / register
+===================== */
+form {
+  max-width: 400px;  /* ancho limitado */
+  margin: 0 auto;    /* centrado */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+form .mb-3 {
+  margin-bottom: 10px; /* reduce espacio entre campos */
+}
+
+form label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+form input {
+  height: 38px; /* menos alto */
+  font-size: 0.9rem;
+}
+
+form button {
+  width: 100%;
+  font-size: 0.95rem;
+  padding: 8px;
+  margin-top: 10px;
+}
+
+/* =====================
+   Contenedores y layout
+===================== */
+.container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Opcional: centrado de textos y títulos en libros */
+ul.list-group {
+  padding: 0;
+}
